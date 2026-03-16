@@ -25,7 +25,7 @@
   },
   "files": ["dist/"],
   "dependencies": {
-    "@orqastudio/types": ">=0.1.0-pre",
+    "@orqastudio/types": "dev",
     "cytoscape": "^3.33.1"
   },
   "peerDependencies": {
