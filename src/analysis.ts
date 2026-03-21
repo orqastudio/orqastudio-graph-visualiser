@@ -62,7 +62,7 @@ export function computeBackboneArtifacts(
 /** Detect knowledge gaps from the relationship graph. */
 export function computeKnowledgeGaps(graph: ReadonlyMap<string, ArtifactNode>): KnowledgeGaps {
     const ungroundedRules: string[] = [];
-    const unusedSkills: string[] = [];
+    const unusedKnowledge: string[] = [];
     const unenforcedDecisions: string[] = [];
 
     for (const node of graph.values()) {
@@ -71,11 +71,11 @@ export function computeKnowledgeGaps(graph: ReadonlyMap<string, ArtifactNode>): 
                 (r) => r.relationship_type === "grounded-by" && graph.get(r.target_id)?.artifact_type === "pillar"
             );
             if (!hasGrounding) ungroundedRules.push(node.id);
-        } else if (node.artifact_type === "skill") {
+        } else if (node.artifact_type === "knowledge") {
             const hasPractitioner = node.references_in.some(
                 (r) => r.relationship_type === "grounded-by" && graph.get(r.source_id)?.artifact_type === "agent"
             );
-            if (!hasPractitioner) unusedSkills.push(node.id);
+            if (!hasPractitioner) unusedKnowledge.push(node.id);
         } else if (node.artifact_type === "decision") {
             const hasGovernsOrDrives = node.references_out.some(
                 (r) => r.relationship_type === "governs" || r.relationship_type === "drives"
@@ -84,7 +84,7 @@ export function computeKnowledgeGaps(graph: ReadonlyMap<string, ArtifactNode>): 
         }
     }
 
-    return { ungroundedRules, unusedSkills, unenforcedDecisions };
+    return { ungroundedRules, unusedKnowledge, unenforcedDecisions };
 }
 
 /**

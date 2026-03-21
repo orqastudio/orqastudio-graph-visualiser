@@ -41,8 +41,8 @@ export interface BackboneArtifact {
 export interface KnowledgeGaps {
     /** Rule IDs that have no `grounded-by` edge pointing to any PILLAR artifact. */
     ungroundedRules: string[];
-    /** Skill IDs that have no `grounded-by` edge from any AGENT artifact. */
-    unusedSkills: string[];
+    /** Knowledge IDs that have no `employs` edge from any AGENT artifact. */
+    unusedKnowledge: string[];
     /** Decision IDs that carry no outgoing `governs` or `drives` edge. */
     unenforcedDecisions: string[];
 }
